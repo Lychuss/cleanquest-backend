@@ -11,21 +11,6 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-
-  @@unique([email])
-  @@map("user")
-}
-
 model Session {
   id        String   @id
   expiresAt DateTime
@@ -72,4 +57,73 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model User {
+  id            String      @id
+  name          String
+  email         String
+  emailVerified Boolean     @default(false)
+  image         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  character     Character?
+  userQuests    UserQuest[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Character {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  ingameName  String   @unique
+  level       Int      @default(1)
+  experience  Int      @default(0)
+  health      Int      @default(100)
+
+  attack      Int      @default(0)
+  critical    Int      @default(0)
+  speed       Int      @default(0)
+
+  defense     Int      @default(0)
+  evasion     Int      @default(0)
+  resistance  Int      @default(0)
+
+  luck        Int      @default(0)
+  stamina     Int      @default(0)
+
+  createdAt   DateTime @default(now())
+
+  @@map("character")
+}
+
+model Quest {
+  id         String      @id @default(uuid())
+  key        String      @unique
+  title      String
+  room       String
+  difficulty String
+  rewards    Json        // { "attack": 5, "speed": 2, "critical": 1 }
+  userQuests UserQuest[]
+
+  @@map("quest")
+}
+
+model UserQuest {
+  id          String    @id @default(uuid())
+  userId      String
+  questId     String
+  completed   Boolean   @default(true)
+  completedAt DateTime?
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quest       Quest     @relation(fields: [questId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questId])
+  @@map("user_quest")
 }
