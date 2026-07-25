@@ -118,7 +118,7 @@ model UserQuest {
   id          String    @id @default(uuid())
   userId      String
   questId     String
-  completed   Boolean   @default(false)
+  completed   Boolean   @default(true)
   completedAt DateTime?
 
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)

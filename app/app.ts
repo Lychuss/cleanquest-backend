@@ -1,17 +1,15 @@
 import "dotenv/config";
 
 import express from "express";
-import type { Request, Response } from "express";
-import { toNodeHandler } from "better-auth/node";
-import { auth } from "../lib/auth.js";
 import cors from "cors";
 
-const app = express();
+import type { Request, Response, NextFunction } from "express";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "../lib/auth.js";
 
-const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    "http://localhost:3000"
-].filter(Boolean) as string[];
+import profileRouter from "./src/routers/profile.route.js";
+
+const app = express();
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -29,7 +27,26 @@ app.use(cors({
     credentials: true
 }));
 
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+    console.error(err);
+
+    if(err instanceof Error){
+        return res.status(500).json({
+            message: err.message,
+            success: false
+        });
+    };
+
+    return res.status(500).json({
+        message: "Unknown Error",
+        success: false
+    });
+});
+
 app.all("/api/auth/*splat", toNodeHandler(auth));
+
+app.use("/cleanquest", profileRouter);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
