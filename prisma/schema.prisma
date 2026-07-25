@@ -81,7 +81,7 @@ model Character {
   userId      String   @unique
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  ingameName  String
+  ingameName  String   @unique
   level       Int      @default(1)
   experience  Int      @default(0)
   health      Int      @default(100)

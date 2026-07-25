@@ -1,5 +1,4 @@
 import { prisma } from "../../../lib/prisma.js";
-import { type Stats } from "../schemas/stats.schema.js";
 
 const ALLOWED_STATS = [
     "experience",
@@ -11,16 +10,29 @@ const ALLOWED_STATS = [
     "evasion",
     "resistance",
     "luck",
-    "stamina"
+    "stamina",
+    "experience"
 ]
 
-export const completeQuest = async (userId: string, questId: string, stats: Record<string, number>) => {
+export const completeQuest = async (userId: string, questId: string) => {
+
+    const quest = await prisma.quest.findUnique({
+        where: {
+            id: questId
+        }
+    });
+
+    if (!quest) {
+        throw new Error("Quest not found");
+    }
+
+    const rewards = quest.rewards as Record<string, number>;
     
     const safeUserStats: Record<string, { increment: number }> = {};
 
     for(const key of ALLOWED_STATS){
 
-        const checkValue = stats[key];
+        const checkValue = rewards[key];
 
         if(typeof checkValue === "number"){
             safeUserStats[key] = { increment: checkValue };
@@ -37,7 +49,7 @@ export const completeQuest = async (userId: string, questId: string, stats: Reco
         ),
         prisma.character.update(
             {
-                where: { userId: userId },
+                where: { userId },
                 data: safeUserStats
             }
         )

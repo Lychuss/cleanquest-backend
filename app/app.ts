@@ -8,6 +8,8 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "../lib/auth.js";
 
 import profileRouter from "./src/routers/profile.route.js";
+import questRouter from "./src/routers/quest.route.js";
+import characterRouter from "./src/routers/character.route.js";
 
 const app = express();
 
@@ -43,12 +45,12 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-app.all("/api/auth/*splat", toNodeHandler(auth));
-
-app.use("/cleanquest", profileRouter);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.all("/api/auth/*splat", toNodeHandler(auth));
+
+app.use("/cleanquest", profileRouter, questRouter, characterRouter);
 
 app.get("/health", (req: Request, res: Response) => {
     res.json({ status: "Server is running!" });
