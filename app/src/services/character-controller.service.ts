@@ -8,3 +8,25 @@ export const characterCreation = async (name: string, userId: string) => {
         }
     })
 }
+
+export const isNameTaken = async (ingameName: string) => {
+    const existing = await prisma.character.findUnique({
+        where: {
+            ingameName
+        }
+    });
+    return existing !== null;
+}
+
+export const characterLevelUp = async (userId: string) => {
+    const data = await prisma.character.findUnique({
+        where: { userId },
+        select: {
+            experience: true
+        }
+    })
+
+    if(!data) return null;
+
+    return data?.experience;
+}

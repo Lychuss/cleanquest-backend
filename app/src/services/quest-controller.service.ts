@@ -1,4 +1,5 @@
 import { prisma } from "../../../lib/prisma.js";
+import { needToLevelUp } from "../utils/helpers.js";
 
 const ALLOWED_STATS = [
     "experience",
@@ -22,7 +23,7 @@ export const completeQuest = async (userId: string, questId: string) => {
         }
     });
 
-    if (!quest) {
+    if (!quest || !quest.rewards) {
         throw new Error("Quest not found");
     }
 
@@ -37,6 +38,18 @@ export const completeQuest = async (userId: string, questId: string) => {
         if(typeof checkValue === "number"){
             safeUserStats[key] = { increment: checkValue };
         }
+    }
+    
+    const questExperience = rewards["experience"];
+
+    if(!questExperience) throw Error("Quest Experience is undefined!");
+
+    const checkLevelUp = await needToLevelUp(userId, questExperience);
+
+    if(checkLevelUp.levelup){
+        safeUserStats["level"] = { increment: 1 }
+
+       safeUserStats["experience"] ={ increment: -(checkLevelUp.calculatedExperience) }
     }
 
     return await prisma.$transaction([

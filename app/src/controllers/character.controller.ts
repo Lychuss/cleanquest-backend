@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { type CharacterCreation } from '../schemas/character.schema.js';
-import { isNameTaken } from '../utils/helpers.js';
+import { isNameTaken } from '../services/character-controller.service.js';
 import { characterCreation } from '../services/character-controller.service.js';
 
 export const createCharacterController = async (req:Request, res:Response, next:NextFunction) => {
