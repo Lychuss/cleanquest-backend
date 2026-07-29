@@ -1,4 +1,5 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 
 import express from "express";
 import cors from "cors";
@@ -16,8 +17,8 @@ const app = express();
 app.use(cors({
     origin: (origin, callback) => {
         const allowedOrigins = [
-            process.env.FRONTEND_URL,
-            "http://localhost:3000"
+            "http://localhost:3000",
+            process.env.NGROK_BASE_URL
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {
