@@ -17,8 +17,7 @@ const app = express();
 app.use(cors({
     origin: (origin, callback) => {
         const allowedOrigins = [
-            "http://localhost:3000",
-            process.env.NGROK_BASE_URL
+            "http://localhost:3000"
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {
