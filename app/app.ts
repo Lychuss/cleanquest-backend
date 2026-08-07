@@ -17,7 +17,8 @@ const app = express();
 app.use(cors({
     origin: (origin, callback) => {
         const allowedOrigins = [
-            "http://localhost:3000"
+            "http://localhost:3000",
+            process.env.BETTER_AUTH_URL
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {
@@ -28,6 +29,17 @@ app.use(cors({
     },
     credentials: true
 }));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.all("/api/auth/*splat", toNodeHandler(auth));
+
+app.use("/cleanquest", profileRouter, questRouter, characterRouter);
+
+app.get("/health", (req: Request, res: Response) => {
+    res.json({ status: "Server is running!" });
+});
 
 app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     console.error(err);
@@ -45,15 +57,5 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.all("/api/auth/*splat", toNodeHandler(auth));
-
-app.use("/cleanquest", profileRouter, questRouter, characterRouter);
-
-app.get("/health", (req: Request, res: Response) => {
-    res.json({ status: "Server is running!" });
-});
 
 export default app;

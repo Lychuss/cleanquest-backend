@@ -11,8 +11,7 @@ const ALLOWED_STATS = [
     "evasion",
     "resistance",
     "luck",
-    "stamina",
-    "experience"
+    "stamina"
 ]
 
 export const completeQuest = async (userId: string, questId: string) => {

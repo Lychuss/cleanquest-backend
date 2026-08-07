@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export const characterCreation = z.object({
+export const characterSchema = z.object({
     ingameName: z.string().max(15)
 })
 
-export type CharacterCreation = z.infer<typeof characterCreation>;
+export type CharacterCreation = z.infer<typeof characterSchema>;
