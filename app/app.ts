@@ -18,7 +18,7 @@ app.use(cors({
     origin: (origin, callback) => {
         const allowedOrigins = [
             "http://localhost:3000",
-            process.env.BETTER_AUTH_URL
+            process.env.BETTER_AUTH_SECRET
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {
