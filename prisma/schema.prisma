@@ -1,10 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,7 +10,7 @@ datasource db {
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
@@ -22,7 +18,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@index([userId])
   @@map("session")
 }
@@ -32,7 +27,6 @@ model Account {
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -42,6 +36,7 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("account")
@@ -62,42 +57,36 @@ model Verification {
 model User {
   id            String      @id
   name          String
-  email         String
+  email         String      @unique
   emailVerified Boolean     @default(false)
   image         String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  sessions      Session[]
   accounts      Account[]
   character     Character?
+  sessions      Session[]
   userQuests    UserQuest[]
 
-  @@unique([email])
   @@map("user")
 }
 
 model Character {
-  id          String   @id @default(uuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  ingameName  String   @unique
-  level       Int      @default(1)
-  experience  Int      @default(0)
-  health      Int      @default(100)
-
-  attack      Int      @default(0)
-  critical    Int      @default(0)
-  speed       Int      @default(0)
-
-  defense     Int      @default(0)
-  evasion     Int      @default(0)
-  resistance  Int      @default(0)
-
-  luck        Int      @default(0)
-  stamina     Int      @default(0)
-
-  createdAt   DateTime @default(now())
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  ingameName String   @unique
+  level      Int      @default(1)
+  experience Int      @default(0)
+  health     Int      @default(100)
+  attack     Int      @default(0)
+  critical   Int      @default(0)
+  speed      Int      @default(0)
+  defense    Int      @default(0)
+  evasion    Int      @default(0)
+  resistance Int      @default(0)
+  luck       Int      @default(0)
+  stamina    Int      @default(0)
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("character")
 }
@@ -108,7 +97,7 @@ model Quest {
   title      String
   room       String
   difficulty String
-  rewards    Json        // { "attack": 5, "speed": 2, "critical": 1 }
+  rewards    Json
   userQuests UserQuest[]
 
   @@map("quest")
@@ -120,9 +109,8 @@ model UserQuest {
   questId     String
   completed   Boolean   @default(true)
   completedAt DateTime?
-
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   quest       Quest     @relation(fields: [questId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, questId])
   @@map("user_quest")
