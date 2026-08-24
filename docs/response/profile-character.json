@@ -1,0 +1,20 @@
+{
+    "message": "Data retrieve successfully",
+    "success": true,
+    "data": {
+        "id": "ddd70c3f-324a-40fb-85a2-9177efcca8d9",
+        "userId": "EQA6BRe8BnOK5piA02229HS4RCO4Ie2b",
+        "ingameName": "test",
+        "level": 3,
+        "experience": 43,
+        "health": 100,
+        "attack": 18,
+        "critical": 14,
+        "speed": 12,
+        "defense": 15,
+        "evasion": 12,
+        "resistance": 6,
+        "luck": 24,
+        "stamina": 12
+    }
+}
