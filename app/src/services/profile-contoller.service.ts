@@ -9,6 +9,8 @@ export const getCharacterData = async (id: string) => {
         }
     );
 
+    console.log(id);
+
     if(!userStats) {
         return null;
     }
