@@ -79,14 +79,14 @@ const quests = [
     rewards: { attack: 6, resistance: 4, stamina: 3 } },
 ];
 
-await prisma.quest.deleteMany();
+// await prisma.quest.deleteMany();
 
-await prisma.quest.createMany({
-  data: quests.map((quest) => ({
-    ...quest,
-    rewards: {
-      ...quest.rewards,
-      experience: getExperience(quest.difficulty, quest.room),
-    },
-  })),
-});
+// await prisma.quest.createMany({
+//   data: quests.map((quest) => ({
+//     ...quest,
+//     rewards: {
+//       ...quest.rewards,
+//       experience: getExperience(quest.difficulty, quest.room),
+//     },
+//   })),
+// });

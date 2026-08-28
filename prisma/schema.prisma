@@ -71,22 +71,24 @@ model User {
 }
 
 model Character {
-  id         String   @id @default(uuid())
-  userId     String   @unique
-  ingameName String   @unique
-  level      Int      @default(1)
-  experience Int      @default(0)
-  health     Int      @default(100)
-  attack     Int      @default(0)
-  critical   Int      @default(0)
-  speed      Int      @default(0)
-  defense    Int      @default(0)
-  evasion    Int      @default(0)
-  resistance Int      @default(0)
-  luck       Int      @default(0)
-  stamina    Int      @default(0)
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String      @id @default(uuid())
+  userId     String      @unique
+  ingameName String      @unique
+  level      Int         @default(1)
+  experience Int         @default(0)
+  health     Int         @default(100)
+  attack     Int         @default(0)
+  critical   Int         @default(0)
+  speed      Int         @default(0)
+  defense    Int         @default(0)
+  evasion    Int         @default(0)
+  resistance Int         @default(0)
+  luck       Int         @default(0)
+  stamina    Int         @default(0)
+  growth     Int         @default(0)
+  completed  UserQuest[]
+  createdAt  DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("character")
 }
@@ -107,10 +109,13 @@ model UserQuest {
   id          String    @id @default(uuid())
   userId      String
   questId     String
+  characterId String
   completed   Boolean   @default(true)
   completedAt DateTime?
   quest       Quest     @relation(fields: [questId], references: [id], onDelete: Cascade)
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  character Character @relation(fields: [characterId], references: [id])
 
   @@unique([userId, questId])
   @@map("user_quest")
