@@ -28,7 +28,7 @@ interface ComputedGrowth {
     stamina: number,
 }
 
-export const completeQuest = async (userId: string, questId: string, characterId: string) => {
+export const completeQuest = async (userId: string, questId: string) => {
 
     const quest = await prisma.quest.findUnique({
         where: {
@@ -70,7 +70,6 @@ export const completeQuest = async (userId: string, questId: string, characterId
             {
                 data: {
                     userId: userId,
-                    characterId: characterId,
                     questId: questId
                 }
             }
@@ -84,17 +83,20 @@ export const completeQuest = async (userId: string, questId: string, characterId
     ])
 }
 
-export const recomputeQuest = async (characterId: string) => {
-    return await prisma.character.findUnique({
+export const recomputeQuest = async (userId: string) => {
+    const completedTask = await prisma.userQuest.count({
         where: {
-            id: characterId
+            userId: userId,
+            completed: true
+        }
+    })
+
+    return await prisma.character.update({
+        where: {
+            userId: userId
         },
-        include: {
-            _count: {
-                select: {
-                    completed: true
-                }
-            }
+        data : {
+            completedTask: completedTask
         }
     })
 }

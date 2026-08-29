@@ -39,6 +39,7 @@ export type CharacterAvgAggregateOutputType = {
   luck: number | null
   stamina: number | null
   growth: number | null
+  completedTask: number | null
 }
 
 export type CharacterSumAggregateOutputType = {
@@ -54,6 +55,7 @@ export type CharacterSumAggregateOutputType = {
   luck: number | null
   stamina: number | null
   growth: number | null
+  completedTask: number | null
 }
 
 export type CharacterMinAggregateOutputType = {
@@ -72,6 +74,7 @@ export type CharacterMinAggregateOutputType = {
   luck: number | null
   stamina: number | null
   growth: number | null
+  completedTask: number | null
   createdAt: Date | null
 }
 
@@ -91,6 +94,7 @@ export type CharacterMaxAggregateOutputType = {
   luck: number | null
   stamina: number | null
   growth: number | null
+  completedTask: number | null
   createdAt: Date | null
 }
 
@@ -110,6 +114,7 @@ export type CharacterCountAggregateOutputType = {
   luck: number
   stamina: number
   growth: number
+  completedTask: number
   createdAt: number
   _all: number
 }
@@ -128,6 +133,7 @@ export type CharacterAvgAggregateInputType = {
   luck?: true
   stamina?: true
   growth?: true
+  completedTask?: true
 }
 
 export type CharacterSumAggregateInputType = {
@@ -143,6 +149,7 @@ export type CharacterSumAggregateInputType = {
   luck?: true
   stamina?: true
   growth?: true
+  completedTask?: true
 }
 
 export type CharacterMinAggregateInputType = {
@@ -161,6 +168,7 @@ export type CharacterMinAggregateInputType = {
   luck?: true
   stamina?: true
   growth?: true
+  completedTask?: true
   createdAt?: true
 }
 
@@ -180,6 +188,7 @@ export type CharacterMaxAggregateInputType = {
   luck?: true
   stamina?: true
   growth?: true
+  completedTask?: true
   createdAt?: true
 }
 
@@ -199,6 +208,7 @@ export type CharacterCountAggregateInputType = {
   luck?: true
   stamina?: true
   growth?: true
+  completedTask?: true
   createdAt?: true
   _all?: true
 }
@@ -305,6 +315,7 @@ export type CharacterGroupByOutputType = {
   luck: number
   stamina: number
   growth: number
+  completedTask: number
   createdAt: Date
   _count: CharacterCountAggregateOutputType | null
   _avg: CharacterAvgAggregateOutputType | null
@@ -347,8 +358,8 @@ export type CharacterWhereInput = {
   luck?: Prisma.IntFilter<"Character"> | number
   stamina?: Prisma.IntFilter<"Character"> | number
   growth?: Prisma.IntFilter<"Character"> | number
+  completedTask?: Prisma.IntFilter<"Character"> | number
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
-  completed?: Prisma.UserQuestListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -368,8 +379,8 @@ export type CharacterOrderByWithRelationInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
+  completedTask?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  completed?: Prisma.UserQuestOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -392,8 +403,8 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   luck?: Prisma.IntFilter<"Character"> | number
   stamina?: Prisma.IntFilter<"Character"> | number
   growth?: Prisma.IntFilter<"Character"> | number
+  completedTask?: Prisma.IntFilter<"Character"> | number
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
-  completed?: Prisma.UserQuestListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId" | "ingameName">
 
@@ -413,6 +424,7 @@ export type CharacterOrderByWithAggregationInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
+  completedTask?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.CharacterCountOrderByAggregateInput
   _avg?: Prisma.CharacterAvgOrderByAggregateInput
@@ -440,6 +452,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   luck?: Prisma.IntWithAggregatesFilter<"Character"> | number
   stamina?: Prisma.IntWithAggregatesFilter<"Character"> | number
   growth?: Prisma.IntWithAggregatesFilter<"Character"> | number
+  completedTask?: Prisma.IntWithAggregatesFilter<"Character"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
 }
 
@@ -458,8 +471,8 @@ export type CharacterCreateInput = {
   luck?: number
   stamina?: number
   growth?: number
+  completedTask?: number
   createdAt?: Date | string
-  completed?: Prisma.UserQuestCreateNestedManyWithoutCharacterInput
   user: Prisma.UserCreateNestedOneWithoutCharacterInput
 }
 
@@ -479,8 +492,8 @@ export type CharacterUncheckedCreateInput = {
   luck?: number
   stamina?: number
   growth?: number
+  completedTask?: number
   createdAt?: Date | string
-  completed?: Prisma.UserQuestUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUpdateInput = {
@@ -498,8 +511,8 @@ export type CharacterUpdateInput = {
   luck?: Prisma.IntFieldUpdateOperationsInput | number
   stamina?: Prisma.IntFieldUpdateOperationsInput | number
   growth?: Prisma.IntFieldUpdateOperationsInput | number
+  completedTask?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  completed?: Prisma.UserQuestUpdateManyWithoutCharacterNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharacterNestedInput
 }
 
@@ -519,8 +532,8 @@ export type CharacterUncheckedUpdateInput = {
   luck?: Prisma.IntFieldUpdateOperationsInput | number
   stamina?: Prisma.IntFieldUpdateOperationsInput | number
   growth?: Prisma.IntFieldUpdateOperationsInput | number
+  completedTask?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  completed?: Prisma.UserQuestUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterCreateManyInput = {
@@ -539,6 +552,7 @@ export type CharacterCreateManyInput = {
   luck?: number
   stamina?: number
   growth?: number
+  completedTask?: number
   createdAt?: Date | string
 }
 
@@ -557,6 +571,7 @@ export type CharacterUpdateManyMutationInput = {
   luck?: Prisma.IntFieldUpdateOperationsInput | number
   stamina?: Prisma.IntFieldUpdateOperationsInput | number
   growth?: Prisma.IntFieldUpdateOperationsInput | number
+  completedTask?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -576,6 +591,7 @@ export type CharacterUncheckedUpdateManyInput = {
   luck?: Prisma.IntFieldUpdateOperationsInput | number
   stamina?: Prisma.IntFieldUpdateOperationsInput | number
   growth?: Prisma.IntFieldUpdateOperationsInput | number
+  completedTask?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -600,6 +616,7 @@ export type CharacterCountOrderByAggregateInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
+  completedTask?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -616,6 +633,7 @@ export type CharacterAvgOrderByAggregateInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
+  completedTask?: Prisma.SortOrder
 }
 
 export type CharacterMaxOrderByAggregateInput = {
@@ -634,6 +652,7 @@ export type CharacterMaxOrderByAggregateInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
+  completedTask?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -653,6 +672,7 @@ export type CharacterMinOrderByAggregateInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
+  completedTask?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -669,11 +689,7 @@ export type CharacterSumOrderByAggregateInput = {
   luck?: Prisma.SortOrder
   stamina?: Prisma.SortOrder
   growth?: Prisma.SortOrder
-}
-
-export type CharacterScalarRelationFilter = {
-  is?: Prisma.CharacterWhereInput
-  isNot?: Prisma.CharacterWhereInput
+  completedTask?: Prisma.SortOrder
 }
 
 export type CharacterCreateNestedOneWithoutUserInput = {
@@ -716,20 +732,6 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type CharacterCreateNestedOneWithoutCompletedInput = {
-  create?: Prisma.XOR<Prisma.CharacterCreateWithoutCompletedInput, Prisma.CharacterUncheckedCreateWithoutCompletedInput>
-  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutCompletedInput
-  connect?: Prisma.CharacterWhereUniqueInput
-}
-
-export type CharacterUpdateOneRequiredWithoutCompletedNestedInput = {
-  create?: Prisma.XOR<Prisma.CharacterCreateWithoutCompletedInput, Prisma.CharacterUncheckedCreateWithoutCompletedInput>
-  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutCompletedInput
-  upsert?: Prisma.CharacterUpsertWithoutCompletedInput
-  connect?: Prisma.CharacterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutCompletedInput, Prisma.CharacterUpdateWithoutCompletedInput>, Prisma.CharacterUncheckedUpdateWithoutCompletedInput>
-}
-
 export type CharacterCreateWithoutUserInput = {
   id?: string
   ingameName: string
@@ -745,8 +747,8 @@ export type CharacterCreateWithoutUserInput = {
   luck?: number
   stamina?: number
   growth?: number
+  completedTask?: number
   createdAt?: Date | string
-  completed?: Prisma.UserQuestCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUncheckedCreateWithoutUserInput = {
@@ -764,8 +766,8 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   luck?: number
   stamina?: number
   growth?: number
+  completedTask?: number
   createdAt?: Date | string
-  completed?: Prisma.UserQuestUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterCreateOrConnectWithoutUserInput = {
@@ -799,8 +801,8 @@ export type CharacterUpdateWithoutUserInput = {
   luck?: Prisma.IntFieldUpdateOperationsInput | number
   stamina?: Prisma.IntFieldUpdateOperationsInput | number
   growth?: Prisma.IntFieldUpdateOperationsInput | number
+  completedTask?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  completed?: Prisma.UserQuestUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateWithoutUserInput = {
@@ -818,131 +820,10 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   luck?: Prisma.IntFieldUpdateOperationsInput | number
   stamina?: Prisma.IntFieldUpdateOperationsInput | number
   growth?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  completed?: Prisma.UserQuestUncheckedUpdateManyWithoutCharacterNestedInput
-}
-
-export type CharacterCreateWithoutCompletedInput = {
-  id?: string
-  ingameName: string
-  level?: number
-  experience?: number
-  health?: number
-  attack?: number
-  critical?: number
-  speed?: number
-  defense?: number
-  evasion?: number
-  resistance?: number
-  luck?: number
-  stamina?: number
-  growth?: number
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCharacterInput
-}
-
-export type CharacterUncheckedCreateWithoutCompletedInput = {
-  id?: string
-  userId: string
-  ingameName: string
-  level?: number
-  experience?: number
-  health?: number
-  attack?: number
-  critical?: number
-  speed?: number
-  defense?: number
-  evasion?: number
-  resistance?: number
-  luck?: number
-  stamina?: number
-  growth?: number
-  createdAt?: Date | string
-}
-
-export type CharacterCreateOrConnectWithoutCompletedInput = {
-  where: Prisma.CharacterWhereUniqueInput
-  create: Prisma.XOR<Prisma.CharacterCreateWithoutCompletedInput, Prisma.CharacterUncheckedCreateWithoutCompletedInput>
-}
-
-export type CharacterUpsertWithoutCompletedInput = {
-  update: Prisma.XOR<Prisma.CharacterUpdateWithoutCompletedInput, Prisma.CharacterUncheckedUpdateWithoutCompletedInput>
-  create: Prisma.XOR<Prisma.CharacterCreateWithoutCompletedInput, Prisma.CharacterUncheckedCreateWithoutCompletedInput>
-  where?: Prisma.CharacterWhereInput
-}
-
-export type CharacterUpdateToOneWithWhereWithoutCompletedInput = {
-  where?: Prisma.CharacterWhereInput
-  data: Prisma.XOR<Prisma.CharacterUpdateWithoutCompletedInput, Prisma.CharacterUncheckedUpdateWithoutCompletedInput>
-}
-
-export type CharacterUpdateWithoutCompletedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  ingameName?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  experience?: Prisma.IntFieldUpdateOperationsInput | number
-  health?: Prisma.IntFieldUpdateOperationsInput | number
-  attack?: Prisma.IntFieldUpdateOperationsInput | number
-  critical?: Prisma.IntFieldUpdateOperationsInput | number
-  speed?: Prisma.IntFieldUpdateOperationsInput | number
-  defense?: Prisma.IntFieldUpdateOperationsInput | number
-  evasion?: Prisma.IntFieldUpdateOperationsInput | number
-  resistance?: Prisma.IntFieldUpdateOperationsInput | number
-  luck?: Prisma.IntFieldUpdateOperationsInput | number
-  stamina?: Prisma.IntFieldUpdateOperationsInput | number
-  growth?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCharacterNestedInput
-}
-
-export type CharacterUncheckedUpdateWithoutCompletedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  ingameName?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  experience?: Prisma.IntFieldUpdateOperationsInput | number
-  health?: Prisma.IntFieldUpdateOperationsInput | number
-  attack?: Prisma.IntFieldUpdateOperationsInput | number
-  critical?: Prisma.IntFieldUpdateOperationsInput | number
-  speed?: Prisma.IntFieldUpdateOperationsInput | number
-  defense?: Prisma.IntFieldUpdateOperationsInput | number
-  evasion?: Prisma.IntFieldUpdateOperationsInput | number
-  resistance?: Prisma.IntFieldUpdateOperationsInput | number
-  luck?: Prisma.IntFieldUpdateOperationsInput | number
-  stamina?: Prisma.IntFieldUpdateOperationsInput | number
-  growth?: Prisma.IntFieldUpdateOperationsInput | number
+  completedTask?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type CharacterCountOutputType
- */
-
-export type CharacterCountOutputType = {
-  completed: number
-}
-
-export type CharacterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  completed?: boolean | CharacterCountOutputTypeCountCompletedArgs
-}
-
-/**
- * CharacterCountOutputType without action
- */
-export type CharacterCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CharacterCountOutputType
-   */
-  select?: Prisma.CharacterCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * CharacterCountOutputType without action
- */
-export type CharacterCountOutputTypeCountCompletedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserQuestWhereInput
-}
 
 
 export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -961,10 +842,9 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   luck?: boolean
   stamina?: boolean
   growth?: boolean
+  completedTask?: boolean
   createdAt?: boolean
-  completed?: boolean | Prisma.Character$completedArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.CharacterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
 
 export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -983,6 +863,7 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   luck?: boolean
   stamina?: boolean
   growth?: boolean
+  completedTask?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
@@ -1003,6 +884,7 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   luck?: boolean
   stamina?: boolean
   growth?: boolean
+  completedTask?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
@@ -1023,14 +905,13 @@ export type CharacterSelectScalar = {
   luck?: boolean
   stamina?: boolean
   growth?: boolean
+  completedTask?: boolean
   createdAt?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "ingameName" | "level" | "experience" | "health" | "attack" | "critical" | "speed" | "defense" | "evasion" | "resistance" | "luck" | "stamina" | "growth" | "createdAt", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "ingameName" | "level" | "experience" | "health" | "attack" | "critical" | "speed" | "defense" | "evasion" | "resistance" | "luck" | "stamina" | "growth" | "completedTask" | "createdAt", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  completed?: boolean | Prisma.Character$completedArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.CharacterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CharacterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1042,7 +923,6 @@ export type CharacterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Character"
   objects: {
-    completed: Prisma.$UserQuestPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1061,6 +941,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     luck: number
     stamina: number
     growth: number
+    completedTask: number
     createdAt: Date
   }, ExtArgs["result"]["character"]>
   composites: {}
@@ -1456,7 +1337,6 @@ readonly fields: CharacterFieldRefs;
  */
 export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  completed<T extends Prisma.Character$completedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$completedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserQuestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1502,6 +1382,7 @@ export interface CharacterFieldRefs {
   readonly luck: Prisma.FieldRef<"Character", 'Int'>
   readonly stamina: Prisma.FieldRef<"Character", 'Int'>
   readonly growth: Prisma.FieldRef<"Character", 'Int'>
+  readonly completedTask: Prisma.FieldRef<"Character", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Character", 'DateTime'>
 }
     
@@ -1901,30 +1782,6 @@ export type CharacterDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Characters to delete.
    */
   limit?: number
-}
-
-/**
- * Character.completed
- */
-export type Character$completedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserQuest
-   */
-  select?: Prisma.UserQuestSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the UserQuest
-   */
-  omit?: Prisma.UserQuestOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserQuestInclude<ExtArgs> | null
-  where?: Prisma.UserQuestWhereInput
-  orderBy?: Prisma.UserQuestOrderByWithRelationInput | Prisma.UserQuestOrderByWithRelationInput[]
-  cursor?: Prisma.UserQuestWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserQuestScalarFieldEnum | Prisma.UserQuestScalarFieldEnum[]
 }
 
 /**

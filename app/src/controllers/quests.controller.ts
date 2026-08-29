@@ -13,9 +13,9 @@ export const questController = async (req: Request, res: Response, next: NextFun
 
     try {
 
-        await completeQuest(data.data?.userId, data.data?.questId, data.data?.characterId);
+        await completeQuest(data.data?.userId, data.data?.questId);
 
-        await recomputeQuest(data.data?.characterId);
+        await recomputeQuest(data.data?.userId);
 
         await updateGrowthPower(data.data?.characterId);
 
