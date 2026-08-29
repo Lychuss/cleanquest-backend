@@ -1,23 +1,20 @@
 import type { Request, Response, NextFunction } from 'express';
-import { completeQuest } from '../services/quest-controller.service.js';
+import { completeQuest, recomputeQuest } from '../services/quest-controller.service.js';
+import { completedSchema, type CompletedQuest } from '../schemas/completedquest.schemas.js';
 
 export const questController = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.user?.id;
-    const questId = req.params?.questId;
+    const data = completedSchema.safeParse(req?.body);
 
-    if(!userId) return res.status(404).json({
+    if(!data.success) return res.status(404).json({
         message: "User not found!",
-        success: false
-    })
-
-    if(typeof questId !== "string") return res.status(404).json({
-        message: "Quest not found!",
         success: false
     })
 
     try {
 
-        await completeQuest(userId, questId);
+        await completeQuest(data.data?.userId, data.data?.questId, data.data?.characterId);
+
+        await recomputeQuest(data.data?.characterId);
 
         return res.status(200).json({
             message: "Quest Successfully Completed!",

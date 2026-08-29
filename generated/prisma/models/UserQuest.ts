@@ -28,6 +28,7 @@ export type UserQuestMinAggregateOutputType = {
   id: string | null
   userId: string | null
   questId: string | null
+  characterId: string | null
   completed: boolean | null
   completedAt: Date | null
 }
@@ -36,6 +37,7 @@ export type UserQuestMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   questId: string | null
+  characterId: string | null
   completed: boolean | null
   completedAt: Date | null
 }
@@ -44,6 +46,7 @@ export type UserQuestCountAggregateOutputType = {
   id: number
   userId: number
   questId: number
+  characterId: number
   completed: number
   completedAt: number
   _all: number
@@ -54,6 +57,7 @@ export type UserQuestMinAggregateInputType = {
   id?: true
   userId?: true
   questId?: true
+  characterId?: true
   completed?: true
   completedAt?: true
 }
@@ -62,6 +66,7 @@ export type UserQuestMaxAggregateInputType = {
   id?: true
   userId?: true
   questId?: true
+  characterId?: true
   completed?: true
   completedAt?: true
 }
@@ -70,6 +75,7 @@ export type UserQuestCountAggregateInputType = {
   id?: true
   userId?: true
   questId?: true
+  characterId?: true
   completed?: true
   completedAt?: true
   _all?: true
@@ -151,6 +157,7 @@ export type UserQuestGroupByOutputType = {
   id: string
   userId: string
   questId: string
+  characterId: string
   completed: boolean
   completedAt: Date | null
   _count: UserQuestCountAggregateOutputType | null
@@ -180,20 +187,24 @@ export type UserQuestWhereInput = {
   id?: Prisma.StringFilter<"UserQuest"> | string
   userId?: Prisma.StringFilter<"UserQuest"> | string
   questId?: Prisma.StringFilter<"UserQuest"> | string
+  characterId?: Prisma.StringFilter<"UserQuest"> | string
   completed?: Prisma.BoolFilter<"UserQuest"> | boolean
   completedAt?: Prisma.DateTimeNullableFilter<"UserQuest"> | Date | string | null
   quest?: Prisma.XOR<Prisma.QuestScalarRelationFilter, Prisma.QuestWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }
 
 export type UserQuestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   questId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   quest?: Prisma.QuestOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  character?: Prisma.CharacterOrderByWithRelationInput
 }
 
 export type UserQuestWhereUniqueInput = Prisma.AtLeast<{
@@ -204,16 +215,19 @@ export type UserQuestWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserQuestWhereInput | Prisma.UserQuestWhereInput[]
   userId?: Prisma.StringFilter<"UserQuest"> | string
   questId?: Prisma.StringFilter<"UserQuest"> | string
+  characterId?: Prisma.StringFilter<"UserQuest"> | string
   completed?: Prisma.BoolFilter<"UserQuest"> | boolean
   completedAt?: Prisma.DateTimeNullableFilter<"UserQuest"> | Date | string | null
   quest?: Prisma.XOR<Prisma.QuestScalarRelationFilter, Prisma.QuestWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }, "id" | "userId_questId">
 
 export type UserQuestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   questId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserQuestCountOrderByAggregateInput
@@ -228,6 +242,7 @@ export type UserQuestScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserQuest"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserQuest"> | string
   questId?: Prisma.StringWithAggregatesFilter<"UserQuest"> | string
+  characterId?: Prisma.StringWithAggregatesFilter<"UserQuest"> | string
   completed?: Prisma.BoolWithAggregatesFilter<"UserQuest"> | boolean
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserQuest"> | Date | string | null
 }
@@ -238,12 +253,14 @@ export type UserQuestCreateInput = {
   completedAt?: Date | string | null
   quest: Prisma.QuestCreateNestedOneWithoutUserQuestsInput
   user: Prisma.UserCreateNestedOneWithoutUserQuestsInput
+  character: Prisma.CharacterCreateNestedOneWithoutCompletedInput
 }
 
 export type UserQuestUncheckedCreateInput = {
   id?: string
   userId: string
   questId: string
+  characterId: string
   completed?: boolean
   completedAt?: Date | string | null
 }
@@ -254,12 +271,14 @@ export type UserQuestUpdateInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quest?: Prisma.QuestUpdateOneRequiredWithoutUserQuestsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutUserQuestsNestedInput
+  character?: Prisma.CharacterUpdateOneRequiredWithoutCompletedNestedInput
 }
 
 export type UserQuestUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   questId?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -268,6 +287,7 @@ export type UserQuestCreateManyInput = {
   id?: string
   userId: string
   questId: string
+  characterId: string
   completed?: boolean
   completedAt?: Date | string | null
 }
@@ -282,6 +302,7 @@ export type UserQuestUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   questId?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -305,6 +326,7 @@ export type UserQuestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   questId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
 }
@@ -313,6 +335,7 @@ export type UserQuestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   questId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
 }
@@ -321,6 +344,7 @@ export type UserQuestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   questId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
 }
@@ -364,6 +388,48 @@ export type UserQuestUncheckedUpdateManyWithoutUserNestedInput = {
   connect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
   update?: Prisma.UserQuestUpdateWithWhereUniqueWithoutUserInput | Prisma.UserQuestUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.UserQuestUpdateManyWithWhereWithoutUserInput | Prisma.UserQuestUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.UserQuestScalarWhereInput | Prisma.UserQuestScalarWhereInput[]
+}
+
+export type UserQuestCreateNestedManyWithoutCharacterInput = {
+  create?: Prisma.XOR<Prisma.UserQuestCreateWithoutCharacterInput, Prisma.UserQuestUncheckedCreateWithoutCharacterInput> | Prisma.UserQuestCreateWithoutCharacterInput[] | Prisma.UserQuestUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.UserQuestCreateOrConnectWithoutCharacterInput | Prisma.UserQuestCreateOrConnectWithoutCharacterInput[]
+  createMany?: Prisma.UserQuestCreateManyCharacterInputEnvelope
+  connect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+}
+
+export type UserQuestUncheckedCreateNestedManyWithoutCharacterInput = {
+  create?: Prisma.XOR<Prisma.UserQuestCreateWithoutCharacterInput, Prisma.UserQuestUncheckedCreateWithoutCharacterInput> | Prisma.UserQuestCreateWithoutCharacterInput[] | Prisma.UserQuestUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.UserQuestCreateOrConnectWithoutCharacterInput | Prisma.UserQuestCreateOrConnectWithoutCharacterInput[]
+  createMany?: Prisma.UserQuestCreateManyCharacterInputEnvelope
+  connect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+}
+
+export type UserQuestUpdateManyWithoutCharacterNestedInput = {
+  create?: Prisma.XOR<Prisma.UserQuestCreateWithoutCharacterInput, Prisma.UserQuestUncheckedCreateWithoutCharacterInput> | Prisma.UserQuestCreateWithoutCharacterInput[] | Prisma.UserQuestUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.UserQuestCreateOrConnectWithoutCharacterInput | Prisma.UserQuestCreateOrConnectWithoutCharacterInput[]
+  upsert?: Prisma.UserQuestUpsertWithWhereUniqueWithoutCharacterInput | Prisma.UserQuestUpsertWithWhereUniqueWithoutCharacterInput[]
+  createMany?: Prisma.UserQuestCreateManyCharacterInputEnvelope
+  set?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  disconnect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  delete?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  connect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  update?: Prisma.UserQuestUpdateWithWhereUniqueWithoutCharacterInput | Prisma.UserQuestUpdateWithWhereUniqueWithoutCharacterInput[]
+  updateMany?: Prisma.UserQuestUpdateManyWithWhereWithoutCharacterInput | Prisma.UserQuestUpdateManyWithWhereWithoutCharacterInput[]
+  deleteMany?: Prisma.UserQuestScalarWhereInput | Prisma.UserQuestScalarWhereInput[]
+}
+
+export type UserQuestUncheckedUpdateManyWithoutCharacterNestedInput = {
+  create?: Prisma.XOR<Prisma.UserQuestCreateWithoutCharacterInput, Prisma.UserQuestUncheckedCreateWithoutCharacterInput> | Prisma.UserQuestCreateWithoutCharacterInput[] | Prisma.UserQuestUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.UserQuestCreateOrConnectWithoutCharacterInput | Prisma.UserQuestCreateOrConnectWithoutCharacterInput[]
+  upsert?: Prisma.UserQuestUpsertWithWhereUniqueWithoutCharacterInput | Prisma.UserQuestUpsertWithWhereUniqueWithoutCharacterInput[]
+  createMany?: Prisma.UserQuestCreateManyCharacterInputEnvelope
+  set?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  disconnect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  delete?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  connect?: Prisma.UserQuestWhereUniqueInput | Prisma.UserQuestWhereUniqueInput[]
+  update?: Prisma.UserQuestUpdateWithWhereUniqueWithoutCharacterInput | Prisma.UserQuestUpdateWithWhereUniqueWithoutCharacterInput[]
+  updateMany?: Prisma.UserQuestUpdateManyWithWhereWithoutCharacterInput | Prisma.UserQuestUpdateManyWithWhereWithoutCharacterInput[]
   deleteMany?: Prisma.UserQuestScalarWhereInput | Prisma.UserQuestScalarWhereInput[]
 }
 
@@ -414,11 +480,13 @@ export type UserQuestCreateWithoutUserInput = {
   completed?: boolean
   completedAt?: Date | string | null
   quest: Prisma.QuestCreateNestedOneWithoutUserQuestsInput
+  character: Prisma.CharacterCreateNestedOneWithoutCompletedInput
 }
 
 export type UserQuestUncheckedCreateWithoutUserInput = {
   id?: string
   questId: string
+  characterId: string
   completed?: boolean
   completedAt?: Date | string | null
 }
@@ -456,8 +524,51 @@ export type UserQuestScalarWhereInput = {
   id?: Prisma.StringFilter<"UserQuest"> | string
   userId?: Prisma.StringFilter<"UserQuest"> | string
   questId?: Prisma.StringFilter<"UserQuest"> | string
+  characterId?: Prisma.StringFilter<"UserQuest"> | string
   completed?: Prisma.BoolFilter<"UserQuest"> | boolean
   completedAt?: Prisma.DateTimeNullableFilter<"UserQuest"> | Date | string | null
+}
+
+export type UserQuestCreateWithoutCharacterInput = {
+  id?: string
+  completed?: boolean
+  completedAt?: Date | string | null
+  quest: Prisma.QuestCreateNestedOneWithoutUserQuestsInput
+  user: Prisma.UserCreateNestedOneWithoutUserQuestsInput
+}
+
+export type UserQuestUncheckedCreateWithoutCharacterInput = {
+  id?: string
+  userId: string
+  questId: string
+  completed?: boolean
+  completedAt?: Date | string | null
+}
+
+export type UserQuestCreateOrConnectWithoutCharacterInput = {
+  where: Prisma.UserQuestWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserQuestCreateWithoutCharacterInput, Prisma.UserQuestUncheckedCreateWithoutCharacterInput>
+}
+
+export type UserQuestCreateManyCharacterInputEnvelope = {
+  data: Prisma.UserQuestCreateManyCharacterInput | Prisma.UserQuestCreateManyCharacterInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserQuestUpsertWithWhereUniqueWithoutCharacterInput = {
+  where: Prisma.UserQuestWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserQuestUpdateWithoutCharacterInput, Prisma.UserQuestUncheckedUpdateWithoutCharacterInput>
+  create: Prisma.XOR<Prisma.UserQuestCreateWithoutCharacterInput, Prisma.UserQuestUncheckedCreateWithoutCharacterInput>
+}
+
+export type UserQuestUpdateWithWhereUniqueWithoutCharacterInput = {
+  where: Prisma.UserQuestWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserQuestUpdateWithoutCharacterInput, Prisma.UserQuestUncheckedUpdateWithoutCharacterInput>
+}
+
+export type UserQuestUpdateManyWithWhereWithoutCharacterInput = {
+  where: Prisma.UserQuestScalarWhereInput
+  data: Prisma.XOR<Prisma.UserQuestUpdateManyMutationInput, Prisma.UserQuestUncheckedUpdateManyWithoutCharacterInput>
 }
 
 export type UserQuestCreateWithoutQuestInput = {
@@ -465,11 +576,13 @@ export type UserQuestCreateWithoutQuestInput = {
   completed?: boolean
   completedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutUserQuestsInput
+  character: Prisma.CharacterCreateNestedOneWithoutCompletedInput
 }
 
 export type UserQuestUncheckedCreateWithoutQuestInput = {
   id?: string
   userId: string
+  characterId: string
   completed?: boolean
   completedAt?: Date | string | null
 }
@@ -503,6 +616,7 @@ export type UserQuestUpdateManyWithWhereWithoutQuestInput = {
 export type UserQuestCreateManyUserInput = {
   id?: string
   questId: string
+  characterId: string
   completed?: boolean
   completedAt?: Date | string | null
 }
@@ -512,17 +626,52 @@ export type UserQuestUpdateWithoutUserInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quest?: Prisma.QuestUpdateOneRequiredWithoutUserQuestsNestedInput
+  character?: Prisma.CharacterUpdateOneRequiredWithoutCompletedNestedInput
 }
 
 export type UserQuestUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   questId?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserQuestUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  questId?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type UserQuestCreateManyCharacterInput = {
+  id?: string
+  userId: string
+  questId: string
+  completed?: boolean
+  completedAt?: Date | string | null
+}
+
+export type UserQuestUpdateWithoutCharacterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quest?: Prisma.QuestUpdateOneRequiredWithoutUserQuestsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutUserQuestsNestedInput
+}
+
+export type UserQuestUncheckedUpdateWithoutCharacterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  questId?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type UserQuestUncheckedUpdateManyWithoutCharacterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   questId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -531,6 +680,7 @@ export type UserQuestUncheckedUpdateManyWithoutUserInput = {
 export type UserQuestCreateManyQuestInput = {
   id?: string
   userId: string
+  characterId: string
   completed?: boolean
   completedAt?: Date | string | null
 }
@@ -540,11 +690,13 @@ export type UserQuestUpdateWithoutQuestInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutUserQuestsNestedInput
+  character?: Prisma.CharacterUpdateOneRequiredWithoutCompletedNestedInput
 }
 
 export type UserQuestUncheckedUpdateWithoutQuestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -552,6 +704,7 @@ export type UserQuestUncheckedUpdateWithoutQuestInput = {
 export type UserQuestUncheckedUpdateManyWithoutQuestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -562,52 +715,62 @@ export type UserQuestSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   userId?: boolean
   questId?: boolean
+  characterId?: boolean
   completed?: boolean
   completedAt?: boolean
   quest?: boolean | Prisma.QuestDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userQuest"]>
 
 export type UserQuestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   questId?: boolean
+  characterId?: boolean
   completed?: boolean
   completedAt?: boolean
   quest?: boolean | Prisma.QuestDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userQuest"]>
 
 export type UserQuestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   questId?: boolean
+  characterId?: boolean
   completed?: boolean
   completedAt?: boolean
   quest?: boolean | Prisma.QuestDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userQuest"]>
 
 export type UserQuestSelectScalar = {
   id?: boolean
   userId?: boolean
   questId?: boolean
+  characterId?: boolean
   completed?: boolean
   completedAt?: boolean
 }
 
-export type UserQuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "questId" | "completed" | "completedAt", ExtArgs["result"]["userQuest"]>
+export type UserQuestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "questId" | "characterId" | "completed" | "completedAt", ExtArgs["result"]["userQuest"]>
 export type UserQuestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quest?: boolean | Prisma.QuestDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
 export type UserQuestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quest?: boolean | Prisma.QuestDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
 export type UserQuestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quest?: boolean | Prisma.QuestDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
 
 export type $UserQuestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -615,11 +778,13 @@ export type $UserQuestPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     quest: Prisma.$QuestPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
+    character: Prisma.$CharacterPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     questId: string
+    characterId: string
     completed: boolean
     completedAt: Date | null
   }, ExtArgs["result"]["userQuest"]>
@@ -1018,6 +1183,7 @@ export interface Prisma__UserQuestClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   quest<T extends Prisma.QuestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuestDefaultArgs<ExtArgs>>): Prisma.Prisma__QuestClient<runtime.Types.Result.GetResult<Prisma.$QuestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  character<T extends Prisma.CharacterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CharacterDefaultArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1050,6 +1216,7 @@ export interface UserQuestFieldRefs {
   readonly id: Prisma.FieldRef<"UserQuest", 'String'>
   readonly userId: Prisma.FieldRef<"UserQuest", 'String'>
   readonly questId: Prisma.FieldRef<"UserQuest", 'String'>
+  readonly characterId: Prisma.FieldRef<"UserQuest", 'String'>
   readonly completed: Prisma.FieldRef<"UserQuest", 'Boolean'>
   readonly completedAt: Prisma.FieldRef<"UserQuest", 'DateTime'>
 }

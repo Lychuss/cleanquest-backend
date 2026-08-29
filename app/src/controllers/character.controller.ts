@@ -5,7 +5,6 @@ import { characterCreation } from '../services/character-controller.service.js';
 
 export const createCharacterController = async (req:Request, res:Response, next:NextFunction) => {
     const userId = req.user?.id;
-    console.log(userId);
     const result = characterSchema.safeParse(req.body);
 
     if(!result.success){

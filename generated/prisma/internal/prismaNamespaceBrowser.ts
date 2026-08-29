@@ -149,6 +149,7 @@ export const CharacterScalarFieldEnum = {
   resistance: 'resistance',
   luck: 'luck',
   stamina: 'stamina',
+  growth: 'growth',
   createdAt: 'createdAt'
 } as const
 
@@ -171,6 +172,7 @@ export const UserQuestScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   questId: 'questId',
+  characterId: 'characterId',
   completed: 'completed',
   completedAt: 'completedAt'
 } as const

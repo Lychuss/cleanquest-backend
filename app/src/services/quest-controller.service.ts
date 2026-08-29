@@ -14,7 +14,7 @@ const ALLOWED_STATS = [
     "stamina"
 ]
 
-export const completeQuest = async (userId: string, questId: string) => {
+export const completeQuest = async (userId: string, questId: string, characterId: string) => {
 
     const quest = await prisma.quest.findUnique({
         where: {
@@ -55,7 +55,9 @@ export const completeQuest = async (userId: string, questId: string) => {
         prisma.userQuest.create(
             {
                 data: {
-                    userId, questId
+                    userId: userId,
+                    characterId: characterId,
+                    questId: questId
                 }
             }
         ),
@@ -66,4 +68,19 @@ export const completeQuest = async (userId: string, questId: string) => {
             }
         )
     ])
+}
+
+export const recomputeQuest = async (characterId: string) => {
+    await prisma.character.findUnique({
+        where: {
+            id: characterId
+        },
+        include: {
+            _count: {
+                select: {
+                    completed: true
+                }
+            }
+        }
+    })
 }

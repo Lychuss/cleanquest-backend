@@ -4,6 +4,6 @@ import { requireAuth } from '../middlewares/authentication.js';
 
 const questRouter = express.Router();
 
-questRouter.put("/quest/:questId/completed-quest", requireAuth, questController);
+questRouter.put("/quest/completed-quest", requireAuth, questController);
 
 export default questRouter;
