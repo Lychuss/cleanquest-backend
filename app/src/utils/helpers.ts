@@ -23,3 +23,8 @@ export const needToLevelUp = async (userId: string, questExperience: number): Pr
 
     return data;
 }
+
+//baseAttack * Math.pow(multiplier, level - 1);
+export const calculateGrowthPower = (baseTotalPower: number, multiplier: number, level: number) => {
+    return baseTotalPower * Math.pow(multiplier, level - 1);
+}
