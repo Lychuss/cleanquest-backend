@@ -13,7 +13,7 @@ export const auth = betterAuth({
         },
     },
     baseURL: process.env.BETTER_AUTH_URL,
-    trustedOrigins: ["http://localhost:3000", "https://cleanquest-frontend.vercel.app"],
+    trustedOrigins: ["http://localhost:3000", "https://cleanquest-frontend.vercel.app", `${process.env.VERCEL_BASE_URL}`],
     database: prismaAdapter(prisma, {provider: "postgresql"}),
     databaseHooks: {
         user: {
