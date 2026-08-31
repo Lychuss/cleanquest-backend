@@ -19,7 +19,8 @@ app.use(cors({
         const allowedOrigins = [
             "http://localhost:3000",
             process.env.BETTER_AUTH_SECRET,
-            "https://cleanquest-frontend.vercel.app"
+            "https://cleanquest-frontend.vercel.app",
+            process.env.VERCEL_BASE_URL
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {
