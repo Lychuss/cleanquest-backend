@@ -30,3 +30,4 @@ export const characterLevelUp = async (userId: string) => {
 
     return data?.experience;
 }
+

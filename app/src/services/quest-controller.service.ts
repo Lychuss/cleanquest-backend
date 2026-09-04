@@ -14,7 +14,6 @@ const ALLOWED_STATS = [
     "luck",
     "stamina"
 ]
-
 interface ComputedGrowth {
     attack: number,
     level: number,
@@ -130,6 +129,8 @@ export const updateGrowthPower = async (characterId: string) => {
 
     const growthPower = calculateGrowthPower(totalBasePower, 1.10, data.level);
 
+
+
     return await prisma.character.update({
         where: {
             id: characterId
@@ -139,3 +140,4 @@ export const updateGrowthPower = async (characterId: string) => {
         }
     })
 }
+
