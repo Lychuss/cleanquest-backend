@@ -1,6 +1,13 @@
 import { prisma } from "../../../lib/prisma.js";
 import { needToLevelUp } from "../utils/helpers.js";
 import { calculateGrowthPower } from "../utils/helpers.js";
+import type { RandomQuestList } from "../types/random-quest.js";
+import cron from "node-cron";
+import {DateTime} from "luxon";
+
+let importantTask: RandomQuestList = [];
+
+const dateToday = DateTime.now().setZone("Asia/Manila").startOf("day").toJSDate();
 
 const ALLOWED_STATS = [
     "experience",
@@ -69,7 +76,8 @@ export const completeQuest = async (userId: string, questId: string) => {
             {
                 data: {
                     userId: userId,
-                    questId: questId
+                    questId: questId,
+                    completedAt: new Date()
                 }
             }
         ),
@@ -139,5 +147,49 @@ export const updateGrowthPower = async (characterId: string) => {
             growth: growthPower
         }
     })
+}
+
+export const checkIfAlreadyCompleted = async (randomQuest: RandomQuestList) => {
+    const arr = randomQuest;
+
+    const completed = arr.map((quest) => quest.id);
+
+    return await prisma.userQuest.findMany({
+        select: {
+            questId: true
+        },
+        where: {
+            questId: {
+                in: completed
+            },
+            completed: true,
+            completedAt: {
+                gte: dateToday
+            }
+        }
+    })
+}
+
+export const getRandomImportantTask = async () => {
+    importantTask = await prisma.quest.findManyRandom(5, {
+        select: {
+            id: true,
+            title: true
+        }
+    });
+}
+
+export const runItOnceDaily = async () => {
+    getRandomImportantTask();
+
+    cron.schedule("0 0 * * *", async () => {
+        await getRandomImportantTask();
+    }, {
+        timezone: "Asia/Manila"
+    })
+}
+
+export const getTheImportantTask = () =>{
+    return importantTask;
 }
 

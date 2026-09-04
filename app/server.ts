@@ -1,7 +1,7 @@
 import app from './app.js';
 import dotenv from 'dotenv';
 
-import { getRandomImportantTask } from './src/services/profile-contoller.service.js';
+import { getRandomImportantTask } from './src/services/quest-controller.service.js';
 
 dotenv.config();
 

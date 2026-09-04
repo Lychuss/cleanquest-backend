@@ -4,3 +4,9 @@ type RandomQuest = {
 }
 
 export type RandomQuestList = RandomQuest[];
+
+type CompleteQuest = {
+    questId: string
+}
+
+export type CompleteQuestList = CompleteQuest[];

@@ -1,5 +1,7 @@
 import type { Request, Response, NextFunction} from 'express';
-import { checkIfAlreadyCompleted, getTheImportantTask,  getCharacterData} from '../services/profile-contoller.service.js';
+import { checkIfAlreadyCompleted, getTheImportantTask} from '../services/quest-controller.service.js';
+import { getCharacterData } from '../services/profile-contoller.service.js';
+import { createAnObjectForCompletedTask } from '../utils/helpers.js';
 
 export const viewProfileController = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id;
@@ -14,6 +16,7 @@ export const viewProfileController = async (req: Request, res: Response, next: N
         const data = await getCharacterData(userId);
         const importantTask = await getTheImportantTask();
         const completedTask = await checkIfAlreadyCompleted(importantTask);
+        const dataForCompletedTask = createAnObjectForCompletedTask(importantTask, completedTask);
 
         if(!data) return res.status(401).json({
             message: "Request Invalid, user id must be real and exist",
@@ -25,7 +28,7 @@ export const viewProfileController = async (req: Request, res: Response, next: N
             success: true,
             data: data,
             importantTask: importantTask,
-            completedTask: completedTask
+            completedTask: dataForCompletedTask
         })
 
     } catch (err) {
