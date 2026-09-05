@@ -243,7 +243,7 @@ export const getTotalCompletion = async (userId: string, ) => {
         },
         bedroom: {
             total: totalBedroom,
-            completed: kitchen
+            completed: bedroom
         },
         living_room: {
             total: totalLivingRoom,
