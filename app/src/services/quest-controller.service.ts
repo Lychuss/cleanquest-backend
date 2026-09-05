@@ -1,6 +1,14 @@
 import { prisma } from "../../../lib/prisma.js";
 import { needToLevelUp } from "../utils/helpers.js";
 import { calculateGrowthPower } from "../utils/helpers.js";
+import type { RandomQuestList } from "../types/random-quest.js";
+import cron from "node-cron";
+import {DateTime} from "luxon";
+import { be, tr } from "zod/v4/locales";
+
+let importantTask: RandomQuestList = [];
+
+const dateToday = DateTime.now().setZone("Asia/Manila").startOf("day").toJSDate();
 
 const ALLOWED_STATS = [
     "experience",
@@ -14,7 +22,6 @@ const ALLOWED_STATS = [
     "luck",
     "stamina"
 ]
-
 interface ComputedGrowth {
     attack: number,
     level: number,
@@ -70,7 +77,8 @@ export const completeQuest = async (userId: string, questId: string) => {
             {
                 data: {
                     userId: userId,
-                    questId: questId
+                    questId: questId,
+                    completedAt: new Date()
                 }
             }
         ),
@@ -130,6 +138,8 @@ export const updateGrowthPower = async (characterId: string) => {
 
     const growthPower = calculateGrowthPower(totalBasePower, 1.10, data.level);
 
+
+
     return await prisma.character.update({
         where: {
             id: characterId
@@ -138,4 +148,106 @@ export const updateGrowthPower = async (characterId: string) => {
             growth: growthPower
         }
     })
+}
+
+export const checkIfAlreadyCompleted = async (randomQuest: RandomQuestList) => {
+    const arr = randomQuest;
+
+    const completed = arr.map((quest) => quest.id);
+
+    return await prisma.userQuest.findMany({
+        select: {
+            questId: true
+        },
+        where: {
+            questId: {
+                in: completed
+            },
+            completed: true,
+            completedAt: {
+                gte: dateToday
+            }
+        }
+    })
+}
+
+export const getRandomImportantTask = async () => {
+    importantTask = await prisma.quest.findManyRandom(5, {
+        select: {
+            id: true,
+            title: true
+        }
+    });
+}
+
+export const runItOnceDaily = async () => {
+    getRandomImportantTask();
+
+    cron.schedule("0 0 * * *", async () => {
+        await getRandomImportantTask();
+    }, {
+        timezone: "Asia/Manila"
+    })
+}
+
+export const getTheImportantTask = () =>{
+    return importantTask;
+}
+
+export const getTotalCompletion = async (userId: string, ) => {
+    let kitchen = 0;
+    let bedroom = 0;
+    let living_room = 0;
+
+    const totalKitchen = await prisma.quest.count({
+        where: {
+            room: "kitchen"
+        }
+    });
+
+    const totalBedroom = await prisma.quest.count({
+        where: {
+            room: "bedroom"
+        }
+    });
+
+    const totalLivingRoom = await prisma.quest.count({
+        where: {
+            room: "living_room"
+        }
+    });
+
+    const quests = await prisma.userQuest.findMany({
+        where: {
+            userId: userId
+        },
+        include: {
+            quest: true
+        }
+    })
+
+    quests.map((quest) => {
+        if(quest.quest.room === "kitchen"){
+            kitchen++;
+        } else if(quest.quest.room === "living_room"){
+            living_room++;
+        } else {
+            bedroom++;
+        }
+    })
+
+    return {
+        kitchen: {
+            total: totalKitchen,
+            completed: kitchen
+        },
+        bedroom: {
+            total: totalBedroom,
+            completed: bedroom
+        },
+        living_room: {
+            total: totalLivingRoom,
+            completed: living_room
+        }
+    }
 }

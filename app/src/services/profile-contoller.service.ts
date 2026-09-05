@@ -17,3 +17,4 @@ export const getCharacterData = async (id: string) => {
 
     return characterData;   
 }
+

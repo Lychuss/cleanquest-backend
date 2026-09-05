@@ -55,38 +55,38 @@ const quests = [
     rewards: { critical: 6, luck: 4, attack: 3 } },
 
   // BATHROOM
-  { key: "sink_scrub", title: "Sink Scrub", room: "bathroom", difficulty: "easy",
+  { key: "sink_scrub", title: "Sink Scrub", room: "bedroom", difficulty: "easy",
     rewards: { resistance: 5, critical: 2 } },
-  { key: "toilet_clean", title: "Toilet Clean", room: "bathroom", difficulty: "medium",
+  { key: "toilet_clean", title: "Toilet Clean", room: "bedroom", difficulty: "medium",
     rewards: { defense: 8, resistance: 3 } },
-  { key: "shower_degrime", title: "Shower Degrime", room: "bathroom", difficulty: "hard",
+  { key: "shower_degrime", title: "Shower Degrime", room: "bedroom", difficulty: "hard",
     rewards: { stamina: 10, evasion: 5, defense: 2 } },
 
   // DINING ROOM
-  { key: "table_wipe", title: "Table Wipe", room: "dining_room", difficulty: "easy",
+  { key: "table_wipe", title: "Table Wipe", room: "kitchen", difficulty: "easy",
     rewards: { speed: 4, luck: 2 } },
-  { key: "chair_align", title: "Chair Align", room: "dining_room", difficulty: "medium",
+  { key: "chair_align", title: "Chair Align", room: "kitchen", difficulty: "medium",
     rewards: { evasion: 6, attack: 3 } },
-  { key: "cabinet_organize", title: "Cabinet Organize", room: "dining_room", difficulty: "hard",
+  { key: "cabinet_organize", title: "Cabinet Organize", room: "kitchen", difficulty: "hard",
     rewards: { critical: 7, stamina: 5, luck: 3 } },
 
   // ENTRYWAY
-  { key: "shoe_rack_tidy", title: "Shoe Rack Tidy", room: "entryway", difficulty: "easy",
+  { key: "shoe_rack_tidy", title: "Shoe Rack Tidy", room: "living_room", difficulty: "easy",
     rewards: { evasion: 3, speed: 3 } },
-  { key: "coat_hang", title: "Coat Hang", room: "entryway", difficulty: "medium",
+  { key: "coat_hang", title: "Coat Hang", room: "living_room", difficulty: "medium",
     rewards: { luck: 6, defense: 3 } },
-  { key: "welcome_mat_clean", title: "Welcome Mat Clean", room: "entryway", difficulty: "hard",
+  { key: "welcome_mat_clean", title: "Welcome Mat Clean", room: "living_room", difficulty: "hard",
     rewards: { attack: 6, resistance: 4, stamina: 3 } },
 ];
 
-// await prisma.quest.deleteMany();
+await prisma.quest.deleteMany();
 
-// await prisma.quest.createMany({
-//   data: quests.map((quest) => ({
-//     ...quest,
-//     rewards: {
-//       ...quest.rewards,
-//       experience: getExperience(quest.difficulty, quest.room),
-//     },
-//   })),
-// });
+await prisma.quest.createMany({
+  data: quests.map((quest) => ({
+    ...quest,
+    rewards: {
+      ...quest.rewards,
+      experience: getExperience(quest.difficulty, quest.room),
+    },
+  })),
+});
