@@ -4,6 +4,7 @@ import { calculateGrowthPower } from "../utils/helpers.js";
 import type { RandomQuestList } from "../types/random-quest.js";
 import cron from "node-cron";
 import {DateTime} from "luxon";
+import { be, tr } from "zod/v4/locales";
 
 let importantTask: RandomQuestList = [];
 
@@ -193,3 +194,60 @@ export const getTheImportantTask = () =>{
     return importantTask;
 }
 
+export const getTotalCompletion = async (userId: string, ) => {
+    let kitchen = 0;
+    let bedroom = 0;
+    let living_room = 0;
+
+    const totalKitchen = await prisma.quest.count({
+        where: {
+            room: "kitchen"
+        }
+    });
+
+    const totalBedroom = await prisma.quest.count({
+        where: {
+            room: "bedroom"
+        }
+    });
+
+    const totalLivingRoom = await prisma.quest.count({
+        where: {
+            room: "living_room"
+        }
+    });
+
+    const quests = await prisma.userQuest.findMany({
+        where: {
+            userId: userId
+        },
+        include: {
+            quest: true
+        }
+    })
+
+    quests.map((quest) => {
+        if(quest.quest.room === "kitchen"){
+            kitchen++;
+        } else if(quest.quest.room === "living_room"){
+            living_room++;
+        } else {
+            bedroom++;
+        }
+    })
+
+    return {
+        kitchen: {
+            total: totalKitchen,
+            completed: kitchen
+        },
+        bedroom: {
+            total: totalBedroom,
+            completed: kitchen
+        },
+        living_room: {
+            total: totalLivingRoom,
+            completed: living_room
+        }
+    }
+}
