@@ -226,7 +226,7 @@ export const getTotalCompletion = async (userId: string, ) => {
         }
     })
 
-    quests.map((quest) => {
+    quests.map((quest: any) => {
         if(quest.quest.room === "kitchen"){
             kitchen++;
         } else if(quest.quest.room === "living_room"){
