@@ -10,6 +10,9 @@ let importantTask: RandomQuestList = [];
 
 const dateToday = DateTime.now().setZone("Asia/Manila").startOf("day").toJSDate();
 
+const todayMidnight = new Date();
+todayMidnight.setHours(0, 0, 0, 0);
+
 const ALLOWED_STATS = [
     "experience",
     "health",
@@ -219,7 +222,10 @@ export const getTotalCompletion = async (userId: string, ) => {
 
     const quests = await prisma.userQuest.findMany({
         where: {
-            userId: userId
+            userId: userId,
+            completedAt: {
+                gte: todayMidnight
+            }
         },
         include: {
             quest: true
