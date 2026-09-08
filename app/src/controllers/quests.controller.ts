@@ -5,17 +5,18 @@ import { updateGrowthPower } from '../services/quest-controller.service.js';
 
 export const questController = async (req: Request, res: Response, next: NextFunction) => {
     const data = completedSchema.safeParse(req?.body);
+    const userId = req.user?.id;
 
-    if(!data.success) return res.status(404).json({
+    if(!data.success || !userId) return res.status(404).json({
         message: "User not found!",
         success: false
     })
 
     try {
 
-        await completeQuest(data.data?.userId, data.data?.questId);
+        await completeQuest(userId, data.data?.questId);
 
-        await recomputeQuest(data.data?.userId);
+        await recomputeQuest(userId);
 
         await updateGrowthPower(data.data?.characterId);
 
