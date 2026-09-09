@@ -257,3 +257,27 @@ export const getTotalCompletion = async (userId: string, ) => {
         }
     }
 }
+
+export const allAvailableTask = async (userId: string, place: string) => {
+    const completedQuest = await prisma.userQuest.findMany({
+        where: {
+            userId: userId,
+            completedAt: {
+                gte: todayMidnight
+            }
+        }
+    })
+
+    const idCompleteQuest = completedQuest.map((quests) => quests.questId);
+    
+    return await prisma.quest.findMany({
+        where: {
+            NOT: {
+                id: {
+                    in: idCompleteQuest
+                }
+            },
+            room: place
+        }
+    })
+}
