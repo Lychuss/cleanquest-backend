@@ -1,4 +1,3 @@
-import { success } from "zod";
 import { characterLevelUp } from "../services/character-controller.service.js";
 import type { CompleteQuestList, RandomQuestList } from "../types/random-quest.js";
 
@@ -19,7 +18,7 @@ export const needToLevelUp = async (userId: string, questExperience: number): Pr
     
     const currentExperience = await characterLevelUp(userId);
 
-    if(!currentExperience) throw Error("The function need to level up, returns null");
+    if(currentExperience === null) throw Error("The function need to level up, returns null");
 
     const data = checkCharacterExperience(currentExperience, questExperience);
 

@@ -26,6 +26,8 @@ export const characterLevelUp = async (userId: string) => {
         }
     })
 
+    console.log(data);
+
     if(!data) return null;
 
     return data?.experience;

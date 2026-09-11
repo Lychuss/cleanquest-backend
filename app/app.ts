@@ -20,7 +20,8 @@ app.use(cors({
             "http://localhost:3000",
             process.env.BETTER_AUTH_SECRET,
             "https://cleanquest-frontend.vercel.app",
-            process.env.VERCEL_BASE_URL
+            process.env.VERCEL_BASE_URL,
+            "127.0.0.1"
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {

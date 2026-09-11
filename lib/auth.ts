@@ -22,7 +22,7 @@ export const auth = betterAuth({
                     await prisma.character.create({
                         data: {
                                 userId: user.id,
-                                ingameName: user.name
+                                ingameName: user.name.split(" ")[0] || 'UNKNOWN'
                         }
                     })
                 }

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const completedSchema = z.object({
-    characterId: z.string(),
-    questId: z.string()
+    questId: z.string(),
+    image: z.base64()
 })
 
 export type CompletedQuest = z.infer<typeof completedSchema>;

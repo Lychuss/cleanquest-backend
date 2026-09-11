@@ -1,8 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import { completeQuest, recomputeQuest } from '../services/quest-controller.service.js';
+import { completeQuest, getCompletedTasksByRoom, recomputeQuest, askOllama } from '../services/quest-controller.service.js';
 import { completedSchema, type CompletedQuest } from '../schemas/completedquest.schemas.js';
 import { updateGrowthPower, allAvailableTask } from '../services/quest-controller.service.js';
-import { success } from 'zod';
 
 export const questController = async (req: Request, res: Response, next: NextFunction) => {
     const data = completedSchema.safeParse(req?.body);
@@ -15,11 +14,23 @@ export const questController = async (req: Request, res: Response, next: NextFun
 
     try {
 
+        const ollamaAnswer = await askOllama(data?.data.image, data?.data.questId)
+
+        console.log(ollamaAnswer.toUpperCase().trim());
+        console.log(ollamaAnswer.toUpperCase().trim() === "NO")
+
+        if(ollamaAnswer.toUpperCase().trim() === "NO"){
+            return res.status(400).json({
+                message: "Invalid image! You are not doing your task!",
+                success: false
+            })
+        }
+
         await completeQuest(userId, data.data?.questId);
 
         await recomputeQuest(userId);
 
-        await updateGrowthPower(data.data?.characterId);
+        await updateGrowthPower(userId);
 
         return res.status(200).json({
             message: "Quest Successfully Completed!",
@@ -42,12 +53,14 @@ export const availableQuestController = async (req: Request, res: Response, next
 
     try {
         const allTask = await allAvailableTask(userId, place);
+        const completedTask = await getCompletedTasksByRoom(userId, place);
 
         return res.status(200).json({
             message: "Get all the task completed!",
             success: true,
-            data: allTask
+            data: allTask, completedTask
         })
+        
     } catch (err){
         next(err);
     }

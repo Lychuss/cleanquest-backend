@@ -4,14 +4,12 @@ import { calculateGrowthPower } from "../utils/helpers.js";
 import type { RandomQuestList } from "../types/random-quest.js";
 import cron from "node-cron";
 import {DateTime} from "luxon";
-import { be, tr } from "zod/v4/locales";
+import { ollama } from "../../../lib/ollama.js";
 
 let importantTask: RandomQuestList = [];
 
-const dateToday = DateTime.now().setZone("Asia/Manila").startOf("day").toJSDate();
-
-const todayMidnight = new Date();
-todayMidnight.setHours(0, 0, 0, 0);
+const getManilaMidnight = () =>
+    DateTime.now().setZone("Asia/Manila").startOf("day").toJSDate();
 
 const ALLOWED_STATS = [
     "experience",
@@ -75,23 +73,30 @@ export const completeQuest = async (userId: string, questId: string) => {
        safeUserStats["experience"] ={ increment: -(checkLevelUp.calculatedExperience) }
     }
 
-    return await prisma.$transaction([
-        prisma.userQuest.create(
-            {
+    const now = new Date();
+    const manilaDate = getManilaMidnight();
+
+    try {
+        return await prisma.$transaction([
+            prisma.userQuest.create({
                 data: {
                     userId: userId,
                     questId: questId,
-                    completedAt: new Date()
+                    completedAt: now,
+                    completedDate: manilaDate   
                 }
-            }
-        ),
-        prisma.character.update(
-            {
+            }),
+            prisma.character.update({
                 where: { userId },
                 data: safeUserStats
-            }
-        )
-    ])
+            })
+        ])
+    } catch (err: any) {
+        if (err.code === "P2002") {
+            throw new Error("Quest already completed today");
+        }
+        throw err;
+    }
 }
 
 export const recomputeQuest = async (userId: string) => {
@@ -112,11 +117,11 @@ export const recomputeQuest = async (userId: string) => {
     })
 }
 
-export const updateGrowthPower = async (characterId: string) => {
+export const updateGrowthPower = async (userId: string) => {
 
     const data: ComputedGrowth | null = await prisma.character.findUnique({
         where: {
-            id: characterId
+            userId: userId
         },
         select: {
             attack: true,
@@ -145,7 +150,7 @@ export const updateGrowthPower = async (characterId: string) => {
 
     return await prisma.character.update({
         where: {
-            id: characterId
+            userId: userId
         },
         data: {
             growth: growthPower
@@ -168,7 +173,7 @@ export const checkIfAlreadyCompleted = async (randomQuest: RandomQuestList) => {
             },
             completed: true,
             completedAt: {
-                gte: dateToday
+                gte: getManilaMidnight()
             }
         }
     })
@@ -224,13 +229,13 @@ export const getTotalCompletion = async (userId: string, ) => {
         where: {
             userId: userId,
             completedAt: {
-                gte: todayMidnight
+                gte: getManilaMidnight()
             }
         },
         include: {
             quest: true
         }
-    })
+    });
 
     quests.map((quest: any) => {
         if(quest.quest.room === "kitchen"){
@@ -263,7 +268,7 @@ export const allAvailableTask = async (userId: string, place: string) => {
         where: {
             userId: userId,
             completedAt: {
-                gte: todayMidnight
+                gte: getManilaMidnight()
             }
         }
     })
@@ -278,6 +283,61 @@ export const allAvailableTask = async (userId: string, place: string) => {
                 }
             },
             room: place
+        }
+    })
+}
+
+export const getCompletedTasksByRoom = async (userId: string, place: string) => {
+    const completedQuest = await prisma.userQuest.findMany({
+        where: {
+            userId: userId,
+            completedAt: {
+                gte: getManilaMidnight()
+            }
+        }
+    })
+
+    const idCompleteQuest = completedQuest.map((quests) => quests.questId);
+    
+    const data = await prisma.quest.count({
+        where: {
+                id: {
+                    in: idCompleteQuest
+                },
+            room: place
+        }
+    })
+
+    const totalQuest = await prisma.quest.count({
+        where: {
+            room: place
+        }
+    })
+
+    return {
+        data,
+        totalQuest
+    }
+}
+
+export const askOllama = async (image: Base64URLString, questId: string) => {
+    const question = await getVerificationPrompt(questId);
+
+    const interaction = await ollama.generate({
+        model: "moondream",
+        prompt: question?.verificationPrompt! + "Reply only with a YES or NO.",
+        images: [image]
+    })
+    return interaction.response;
+}
+
+const getVerificationPrompt = async (questId: string) => {
+    return await prisma.quest.findUnique({
+        where: {
+            id: questId
+        },
+        select: {
+            verificationPrompt: true
         }
     })
 }

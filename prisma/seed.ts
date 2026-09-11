@@ -32,54 +32,70 @@ const getExperience = (difficulty: string, room: string) => {
 
 const quests = [
   { key: "dust_buster", title: "Dust Buster", room: "living_room", difficulty: "easy",
-    rewards: { attack: 5, speed: 2 } },
+    rewards: { attack: 5, speed: 2 },
+    verificationPrompt: "Does this image show someone dusting furniture or surfaces?" },
   { key: "floor_sweep", title: "Floor Sweep", room: "living_room", difficulty: "medium",
-    rewards: { stamina: 8, defense: 3 } },
+    rewards: { stamina: 8, defense: 3 },
+    verificationPrompt: "Does this image show someone sweeping the floor?" },
   { key: "clutter_clear", title: "Clutter Clear", room: "living_room", difficulty: "hard",
-    rewards: { luck: 10, evasion: 4, speed: 3 } },
+    rewards: { luck: 10, evasion: 4, speed: 3 },
+    verificationPrompt: "Does this image show someone clearing clutter or picking up scattered items from a space?" },
 
   // KITCHEN
   { key: "dish_duty", title: "Dish Duty", room: "kitchen", difficulty: "easy",
-    rewards: { attack: 4, critical: 2 } },
+    rewards: { attack: 4, critical: 2 },
+    verificationPrompt: "Does this image show someone washing or drying dishes?" },
   { key: "counter_clean_up", title: "Counter Clean-Up", room: "kitchen", difficulty: "medium",
-    rewards: { resistance: 6, defense: 4 } },
+    rewards: { resistance: 6, defense: 4 },
+    verificationPrompt: "Does this image show someone wiping or cleaning a kitchen counter?" },
   { key: "fridge_patrol", title: "Fridge Patrol", room: "kitchen", difficulty: "hard",
-    rewards: { stamina: 9, luck: 5, critical: 3 } },
+    rewards: { stamina: 9, luck: 5, critical: 3 },
+    verificationPrompt: "Does this image show someone organizing, cleaning, or checking the inside of a refrigerator?" },
 
   // BEDROOM
   { key: "bed_making", title: "Bed Making", room: "bedroom", difficulty: "easy",
-    rewards: { defense: 5, evasion: 2 } },
+    rewards: { defense: 5, evasion: 2 },
+    verificationPrompt: "Does this image show someone making or arranging a bed?" },
   { key: "laundry_fold", title: "Laundry Fold", room: "bedroom", difficulty: "medium",
-    rewards: { speed: 7, stamina: 4 } },
+    rewards: { speed: 7, stamina: 4 },
+    verificationPrompt: "Does this image show someone folding laundry or clothes?" },
   { key: "closet_organize", title: "Closet Organize", room: "bedroom", difficulty: "hard",
-    rewards: { critical: 6, luck: 4, attack: 3 } },
+    rewards: { critical: 6, luck: 4, attack: 3 },
+    verificationPrompt: "Does this image show someone organizing a closet or arranging clothes/items inside one?" },
 
   // BATHROOM
   { key: "sink_scrub", title: "Sink Scrub", room: "bedroom", difficulty: "easy",
-    rewards: { resistance: 5, critical: 2 } },
+    rewards: { resistance: 5, critical: 2 },
+    verificationPrompt: "Does this image show someone scrubbing or cleaning a sink?" },
   { key: "toilet_clean", title: "Toilet Clean", room: "bedroom", difficulty: "medium",
-    rewards: { defense: 8, resistance: 3 } },
+    rewards: { defense: 8, resistance: 3 },
+    verificationPrompt: "Does this image show someone cleaning a toilet?" },
   { key: "shower_degrime", title: "Shower Degrime", room: "bedroom", difficulty: "hard",
-    rewards: { stamina: 10, evasion: 5, defense: 2 } },
+    rewards: { stamina: 10, evasion: 5, defense: 2 },
+    verificationPrompt: "Does this image show someone cleaning or scrubbing a shower or bathtub?" },
 
   // DINING ROOM
   { key: "table_wipe", title: "Table Wipe", room: "kitchen", difficulty: "easy",
-    rewards: { speed: 4, luck: 2 } },
+    rewards: { speed: 4, luck: 2 },
+    verificationPrompt: "Does this image show someone wiping down a table?" },
   { key: "chair_align", title: "Chair Align", room: "kitchen", difficulty: "medium",
-    rewards: { evasion: 6, attack: 3 } },
+    rewards: { evasion: 6, attack: 3 },
+    verificationPrompt: "Does this image show someone arranging or aligning chairs neatly?" },
   { key: "cabinet_organize", title: "Cabinet Organize", room: "kitchen", difficulty: "hard",
-    rewards: { critical: 7, stamina: 5, luck: 3 } },
+    rewards: { critical: 7, stamina: 5, luck: 3 },
+    verificationPrompt: "Does this image show someone organizing the inside of a cabinet?" },
 
   // ENTRYWAY
   { key: "shoe_rack_tidy", title: "Shoe Rack Tidy", room: "living_room", difficulty: "easy",
-    rewards: { evasion: 3, speed: 3 } },
+    rewards: { evasion: 3, speed: 3 },
+    verificationPrompt: "Does this image show someone organizing or tidying a shoe rack?" },
   { key: "coat_hang", title: "Coat Hang", room: "living_room", difficulty: "medium",
-    rewards: { luck: 6, defense: 3 } },
+    rewards: { luck: 6, defense: 3 },
+    verificationPrompt: "Does this image show someone hanging up a coat or jacket?" },
   { key: "welcome_mat_clean", title: "Welcome Mat Clean", room: "living_room", difficulty: "hard",
-    rewards: { attack: 6, resistance: 4, stamina: 3 } },
+    rewards: { attack: 6, resistance: 4, stamina: 3 },
+    verificationPrompt: "Does this image show someone cleaning or shaking out a welcome/door mat?" },
 ];
-
-await prisma.quest.deleteMany();
 
 await prisma.quest.createMany({
   data: quests.map((quest) => ({
