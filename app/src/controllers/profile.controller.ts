@@ -15,7 +15,7 @@ export const viewProfileController = async (req: Request, res: Response, next: N
 
         const data = await getCharacterData(userId);
         const importantTask = await getTheImportantTask();
-        const completedTask = await checkIfAlreadyCompleted(importantTask);
+        const completedTask = await checkIfAlreadyCompleted(importantTask, userId);
         const dataForCompletedTask = createAnObjectForCompletedTask(importantTask, completedTask);
         const totalCompletionPerTask = await getTotalCompletion(userId);
 

@@ -158,7 +158,7 @@ export const updateGrowthPower = async (userId: string) => {
     })
 }
 
-export const checkIfAlreadyCompleted = async (randomQuest: RandomQuestList) => {
+export const checkIfAlreadyCompleted = async (randomQuest: RandomQuestList, userId: string) => {
     const arr = randomQuest;
 
     const completed = arr.map((quest) => quest.id);
@@ -168,6 +168,7 @@ export const checkIfAlreadyCompleted = async (randomQuest: RandomQuestList) => {
             questId: true
         },
         where: {
+            userId: userId,
             questId: {
                 in: completed
             },
