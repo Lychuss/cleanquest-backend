@@ -1,5 +1,6 @@
+
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["relationJoins"]
 }
 
@@ -72,51 +73,61 @@ model User {
 }
 
 model Character {
-  id         String   @id @default(uuid())
-  userId     String   @unique
-  ingameName String   @unique
-  level      Int      @default(1)
-  experience Int      @default(0)
-  health     Int      @default(100)
-  attack     Int      @default(0)
-  critical   Int      @default(0)
-  speed      Int      @default(0)
-  defense    Int      @default(0)
-  evasion    Int      @default(0)
-  resistance Int      @default(0)
-  luck       Int      @default(0)
-  stamina    Int      @default(0)
-  growth     Int      @default(0)
-  completedTask  Int      @default(0)
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  ingameName    String   @unique
+  level         Int      @default(1)
+  experience    Int      @default(0)
+  health        Int      @default(100)
+  attack        Int      @default(0)
+  critical      Int      @default(0)
+  speed         Int      @default(0)
+  defense       Int      @default(0)
+  evasion       Int      @default(0)
+  resistance    Int      @default(0)
+  luck          Int      @default(0)
+  stamina       Int      @default(0)
+  growth        Int      @default(0)
+  completedTask Int      @default(0)
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("character")
 }
 
 model Quest {
-  id         String      @id @default(uuid())
-  key        String      @unique
-  title      String
-  room       String
-  difficulty String
-  verificationPrompt  String
-  rewards    Json
-  userQuests UserQuest[]
+  id                 String      @id @default(uuid())
+  key                String      @unique
+  title              String
+  room               String
+  difficulty         String
+  verificationPrompt String
+  rewards            Json
+  userQuests         UserQuest[]
 
   @@map("quest")
 }
 
 model UserQuest {
-  id          String    @id @default(uuid())
-  userId      String
-  questId     String
-  completed   Boolean   @default(true)
-  completedAt DateTime  @default(now())
+  id            String   @id @default(uuid())
+  userId        String
+  questId       String
+  completed     Boolean  @default(true)
+  completedAt   DateTime @default(now())
   completedDate DateTime @default(now()) @db.Date
-  quest       Quest     @relation(fields: [questId], references: [id], onDelete: Cascade)
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quest         Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, questId, completedDate])
   @@map("user_quest")
+}
+
+model RateLimit {
+  id          String @id
+  key         String
+  count       Int
+  lastRequest BigInt
+
+  @@unique([key])
+  @@map("rateLimit")
 }

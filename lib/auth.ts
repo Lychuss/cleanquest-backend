@@ -11,6 +11,9 @@ export const auth = betterAuth({
             sameSite: "none",
             secure: true,
         },
+        ipAddress: {
+            ipAddressHeaders: ['x-fowarded-for']
+        }
     },
     baseURL: process.env.BETTER_AUTH_URL,
     trustedOrigins: ["http://localhost:3000", "https://cleanquest-frontend.vercel.app", `${process.env.VERCEL_BASE_URL}`],
@@ -46,5 +49,16 @@ export const auth = betterAuth({
             enabled: true,
             trustedProviders: ["google"],
         }
-    }
+    },
+    rateLimit: {
+        window: 60,
+        enabled: true,
+        max: 100,
+        storage: 'database',
+        customRules: {
+            "/sign-in/email": { window: 60, max: 5},
+            "/sign-in/google": { window: 60, max: 5},
+            "/sign-up/email": { window: 60, max: 5}
+        }
+    },
 });
