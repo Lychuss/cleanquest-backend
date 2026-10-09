@@ -7,6 +7,6 @@ import { cache } from '../middlewares/cache.js';
 
 const characterRouter = express.Router();
 
-characterRouter.post("/character/creation", apiLimiter, cache(300), requireAuth, createCharacterController);
+characterRouter.post("/character/creation", requireAuth, apiLimiter, cache(300), createCharacterController);
 
 export default characterRouter;

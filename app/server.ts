@@ -1,4 +1,4 @@
-import app from './app.js';
+import app from './app.ts';
 import dotenv from 'dotenv';
 
 import { getRandomImportantTask } from './src/services/quest-controller.service.js';

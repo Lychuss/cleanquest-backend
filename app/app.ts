@@ -8,11 +8,11 @@ import type { Request, Response, NextFunction } from "express";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "../lib/auth.js";
 
-import profileRouter from "./src/routers/profile.route.js";
-import questRouter from "./src/routers/quest.route.js";
-import characterRouter from "./src/routers/character.route.js";
+import profileRouter from "./src/routers/profile.route.ts";
+import questRouter from "./src/routers/quest.route.ts";
+import characterRouter from "./src/routers/character.route.ts";
 
-const app = express();
+export const app = express();
 
 
 app.use(cors({

@@ -2,10 +2,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./dist",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "target": "ES2022",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -17,13 +17,16 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "esModuleInterop": true
   },
   "include": [
     "app/**/*.ts",
     "lib/**/*.ts",
     "prisma/**/*.ts"
-  ],
+, "jest.setup.ts"  ],
   "exclude": [
     "node_modules",
     "dist"

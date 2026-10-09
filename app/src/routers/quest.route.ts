@@ -7,7 +7,7 @@ import { cache } from '../middlewares/cache.js';
 
 const questRouter = express.Router();
 
-questRouter.put("/quest/completed-quest", apiLimiter, cache(300), requireAuth, questController);
-questRouter.get("/quest/available-task/:place", apiLimiter, cache(300), requireAuth, availableQuestController);
+questRouter.put("/quest/completed-quest", requireAuth, apiLimiter, cache(300), questController);
+questRouter.get("/quest/available-task/:place", requireAuth, apiLimiter, cache(300), availableQuestController);
 
 export default questRouter;

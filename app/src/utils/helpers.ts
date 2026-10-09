@@ -1,5 +1,5 @@
-import { characterLevelUp } from "../services/character-controller.service.js";
-import type { CompleteQuestList, RandomQuestList } from "../types/random-quest.js";
+import { characterLevelUp } from "../services/character-controller.service.ts";
+import type { CompleteQuestList, RandomQuestList } from "../types/random-quest.ts";
 
 type LevelUp = {
     levelup: boolean,
