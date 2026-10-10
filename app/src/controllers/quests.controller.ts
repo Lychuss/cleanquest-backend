@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { completeQuest, getCompletedTasksByRoom, recomputeQuest, askOllama } from '../services/quest-controller.service.js';
-import { completedSchema, type CompletedQuest } from '../schemas/completedquest.schemas.js';
+import { completedSchema } from '../schemas/completedquest.schemas.js';
 import { updateGrowthPower, allAvailableTask } from '../services/quest-controller.service.js';
 
 export const questController = async (req: Request, res: Response, next: NextFunction) => {

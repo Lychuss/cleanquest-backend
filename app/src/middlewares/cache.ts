@@ -30,7 +30,5 @@ export const cache = (ttl = 60) => async (req: Request, res: Response, next: Nex
         return originalJson(body)
     }
 
-    console.log("I am getting hit")
-
     next();
 }

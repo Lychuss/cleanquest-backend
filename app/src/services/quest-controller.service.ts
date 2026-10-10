@@ -325,9 +325,10 @@ export const askOllama = async (image: Base64URLString, questId: string) => {
     const question = await getVerificationPrompt(questId);
 
     const interaction = await ollama.generate({
-        model: "moondream",
+        model: "gemma4:31b-cloud",
         prompt: question?.verificationPrompt! + "Reply only with a YES or NO.",
-        images: [image]
+        images: [image],
+        options: { temperature: 0 }
     })
     return interaction.response;
 }

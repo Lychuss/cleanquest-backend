@@ -7,6 +7,6 @@ import { cache } from '../middlewares/cache.js';
 
 const profileRouter = express.Router();
 
-profileRouter.get("/character/profile/:userId/view-stats", requireAuth, apiLimiter, cache(300), viewProfileController);
+profileRouter.get("/character/profile/:userId/view-stats", requireAuth, apiLimiter, viewProfileController);
 
 export default profileRouter;

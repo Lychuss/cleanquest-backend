@@ -10,11 +10,11 @@ const makeStore = (prefix: string) =>
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 100,
+    limit: 300,
     standardHeaders: "draft-8",
     legacyHeaders: false,
     store: makeStore('api'),
-    keyGenerator: (req) => req.user?.id ?? ipKeyGenerator(req.ip ?? 'unkown'),
+    keyGenerator: (req) => req.user?.id ?? ipKeyGenerator(req.ip ?? 'unknown'),
     handler: (req, res) => {
         res.status(429).json({ error: "Too many request!"})
     }
